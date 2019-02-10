@@ -13,11 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Calc',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: MyHomePage(title: 'GDG SLA - Flutter Intro'),
+      home: MyHomePage(title: 'GDG SLA - Flutter Calc'),
     );
   }
 }
@@ -56,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     buildButton(7),
                     buildButton(8),
                     buildButton(9),
+                    buildOperatorButton("/"),
                   ],
                 ),
                 Row(
@@ -63,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     buildButton(4),
                     buildButton(5),
                     buildButton(6),
+                    buildOperatorButton("*"),
                   ],
                 ),
                 Row(
@@ -70,53 +72,29 @@ class _MyHomePageState extends State<MyHomePage> {
                     buildButton(1),
                     buildButton(2),
                     buildButton(3),
+                    buildOperatorButton("-", onPressed: _subtrair),
                   ],
                 ),
                 Row(
                   children: <Widget>[
-                    Expanded(
-                      child: AppButton(
-                        text: "-",
-                        backgroundColor: Colors.redAccent,
-                        shadowColor: Colors.red.shade900,
-                        onPressed: _subtrair,
-                      ),
-                    ),
+                    buildOperatorButton("+-"),
                     buildButton(0),
-                    Expanded(
-                      child: AppButton(
-                        text: "+",
-                        backgroundColor: Colors.blue,
-                        shadowColor: Colors.blue.shade800,
-                        onPressed: _somar,
-                      ),
-                    ),
+                    buildOperatorButton(","),
+                    buildOperatorButton("+", onPressed: _somar)
                   ],
                 ),
                 Row(
                   children: <Widget>[
+                    buildOperatorButton("C", flex: 1, onPressed: _limpar),
                     Expanded(
-                      child: AppButton(
-                        text: "=",
-                        onPressed: _igual,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AppButton(
+                            onPressed: _remover,
+                            child: Icon(Icons.backspace, color: Colors.white)),
                       ),
                     ),
-                    Expanded(
-                      child: AppButton(
-                        text: "C",
-                        onPressed: _limpar,
-                        backgroundColor: Colors.redAccent,
-                        shadowColor: Colors.red.shade900,
-                      ),
-                    ),
-                    Expanded(
-                      child: AppButton(
-                        text: "DEL",
-                        onPressed: _remover,
-                        backgroundColor: Colors.orange,
-                        shadowColor: Colors.deepOrange,
-                      ),
-                    )
+                    buildOperatorButton("=", flex: 2, onPressed: _igual),
                   ],
                 )
               ],
@@ -157,9 +135,28 @@ class _MyHomePageState extends State<MyHomePage> {
         child: AppButton(
           text: "$num",
           fontSize: 22,
+          textColor: Colors.white,
           onPressed: () {
             _addNum(num);
           },
+          backgroundColor: Theme.of(context).primaryColorDark,
+          shadowColor: Theme.of(context).primaryColorDark,
+        ),
+      ),
+    );
+  }
+
+  Widget buildOperatorButton(String operator,
+      {int flex, VoidCallback onPressed}) {
+    return Expanded(
+      flex: flex ?? 1,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: AppButton(
+          text: operator,
+          textColor: Colors.white,
+          fontSize: 22,
+          onPressed: onPressed,
         ),
       ),
     );

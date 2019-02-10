@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class AppButton extends StatefulWidget {
   final String text;
@@ -11,12 +12,12 @@ class AppButton extends StatefulWidget {
 
   AppButton(
       {this.text,
-        this.onPressed,
-        this.textColor,
-        this.backgroundColor,
-        this.shadowColor,
-        this.fontSize = 14,
-        this.child}) {
+      this.onPressed,
+      this.textColor,
+      this.backgroundColor,
+      this.shadowColor,
+      this.fontSize = 14,
+      this.child}) {
     assert((child == null && text != null) || (child != null && text == null));
   }
 
@@ -46,7 +47,7 @@ class _AppButtonState extends State<AppButton> {
       },
       onTapUp: (TapUpDetails tapDetails) {
         if (widget.onPressed != null) {
-          _releaseButton();
+          Future.delayed(Duration(milliseconds: 150), _releaseButton);
           widget.onPressed();
         }
       },
@@ -67,24 +68,25 @@ class _AppButtonState extends State<AppButton> {
             boxShadow: [
               BoxShadow(
                   color:
-                  widget.shadowColor ?? Theme.of(context).primaryColorDark,
+                      widget.shadowColor ?? Theme.of(context).primaryColorDark,
                   offset: Offset(0, _shadow))
             ]),
         foregroundDecoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: _colorPressed),
         child: widget.text != null
             ? Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              widget.text,
-              style: TextStyle(
-                  color:
-                  widget.textColor ?? Theme.of(context).buttonColor,
-                  fontSize: widget.fontSize),
-            )
-          ],
-        )
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    widget.text,
+                    style: TextStyle(
+                        color:
+                            widget.textColor ?? Theme.of(context).buttonColor,
+                        fontSize: widget.fontSize,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              )
             : widget.child,
       ),
     );
