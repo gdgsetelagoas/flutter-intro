@@ -30,7 +30,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   var _display = "";
   int primeiroValor = 0;
   int segundoValor = 0;
@@ -56,12 +55,26 @@ class _MyHomePageState extends State<MyHomePage> {
                         color: Colors.grey.shade300,
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(20)),
-                    child: Row(
-                      children: <Widget>[
-                        Text(_display,
-                            style: TextStyle(
-                                color: Colors.grey[900], fontSize: 60))
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Center(),
+                          Text(_display,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                  color: Colors.grey[800],
+                                  fontSize: 55,
+                                  fontFamily: "Digital",
+                                  shadows: [
+                                    BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 1.50,
+                                        offset: Offset(-1, 2.5))
+                                  ])),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -170,6 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(8.0),
         child: AppButton(
           text: "$num",
+          fontSize: 22,
           onPressed: () {
             _addNum(num);
           },
