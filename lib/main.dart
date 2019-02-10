@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_calc/nova_tela.dart';
 import 'package:flutter_calc/widgets/app_button_widget.dart';
+import 'package:flutter_calc/widgets/app_display_widget.dart';
 
 void main() => runApp(MyApp());
 
@@ -48,35 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.all(8.0),
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Center(),
-                          Text(_display,
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                  color: Colors.grey[800],
-                                  fontSize: 55,
-                                  fontFamily: "Digital",
-                                  shadows: [
-                                    BoxShadow(
-                                        color: Colors.black26,
-                                        blurRadius: 1.50,
-                                        offset: Offset(-1, 2.5))
-                                  ])),
-                        ],
-                      ),
-                    ),
-                  ),
+                  child: AppDisplay(text: _display),
                 ),
                 Row(
                   children: <Widget>[
